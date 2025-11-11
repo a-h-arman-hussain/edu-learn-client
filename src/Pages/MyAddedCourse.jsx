@@ -16,10 +16,9 @@ const MyAddedCourse = () => {
   return (
     <div className="max-w-6xl mx-auto my-10 px-4">
       <title>EduLearn | My Added Course</title>
-      <h1 className="text-3xl font-bold text-center text-primary mb-8">
-        My Added Courses
-      </h1>
-
+      <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-8">
+        My Added <span className="text-primary">Course</span>
+      </h2>
       {myCourse.length === 0 ? (
         <p className="text-center text-gray-500 text-lg">
           You haven’t added any course yet.

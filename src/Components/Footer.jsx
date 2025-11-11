@@ -2,6 +2,7 @@ import React from "react";
 import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router";
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -9,8 +10,9 @@ const Footer = () => {
       <div className="container mx-auto px-6 grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-8">
         {/* Brand Section */}
         <div>
-          <Link to="/" className="text-2xl font-bold text-primary">
-            EduLearn
+          <Link to="/" className="text-2xl font-bold text-primary flex items-center">
+            <img className="w-8" src={logo} alt="" />
+            <span>EduLearn</span>
           </Link>
           <p className="mt-3 text-gray-500">
             Empowering learners worldwide with accessible, high-quality

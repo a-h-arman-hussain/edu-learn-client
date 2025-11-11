@@ -1,14 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 const ErrorPage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 px-4">
-        <title>EduLearn | Error</title>
+      <title>EduLearn | Error</title>
       {/* Animated 404 */}
-      <h1 className="text-9xl font-extrabold text-purple-300 animate-bounce mb-6">
+      <h1 className="text-9xl font-extrabold text-purple-300 animate-bounce mb-6 mt-6">
         404
       </h1>
 
@@ -24,12 +22,12 @@ const ErrorPage = () => {
       </p>
 
       {/* Go Back Button */}
-      <button
-        onClick={() => navigate("/")}
+      <Link
+        to="/"
         className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
       >
         ← Go Back Home
-      </button>
+      </Link>
 
       {/* Floating illustration */}
       <div className="mt-12 relative w-48 h-48">

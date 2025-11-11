@@ -30,10 +30,6 @@ const router = createBrowserRouter([
         path: "/courses",
         Component: Courses,
       },
-    //   {
-    //     path: "/dashboard",
-    //     Component: Dashboard,
-    //   },
       {
         path: "/my-enrolled-course",
         element: (

@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
 import { Outlet } from "react-router";
+import Footer from "../Components/Footer";
 
 const AuthLayout = () => {
   return (
@@ -11,6 +12,9 @@ const AuthLayout = () => {
       <main>
         <Outlet></Outlet>
       </main>
+      <footer>
+        <Footer></Footer>
+      </footer>
     </div>
   );
 };

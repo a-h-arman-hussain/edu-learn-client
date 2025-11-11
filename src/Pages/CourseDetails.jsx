@@ -9,6 +9,7 @@ import useCourses from "../Hooks/useCourses";
 const CourseDetails = () => {
   const data = useLoaderData();
   const courseDetails = data.result;
+  console.log(courseDetails);
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const { loading, error } = useCourses();
@@ -17,8 +18,21 @@ const CourseDetails = () => {
   if (error) return <ErrorPage message="Course not found" />;
 
   const handleEnrolled = () => {
+    const enrollData = {
+      title: courseDetails.title,
+      imageURL: courseDetails.imageURL,
+      price: courseDetails.price,
+      duration: courseDetails.duration,
+      category: courseDetails.category,
+      description: courseDetails.description,
+      course_start_date: courseDetails.course_start_date,
+      course_end_date: courseDetails.course_end_date,
+      created_by: courseDetails.created_by,
+      created_ad: courseDetails.created_ad,
+    };
+    console.log(enrollData);
     const enrolledCourse = {
-      ...courseDetails,
+      ...enrollData,
       enrolled_by: user?.email,
       enrolled_at: new Date().toISOString(),
     };
@@ -84,7 +98,7 @@ const CourseDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto my-12 bg-white rounded-3xl shadow-xl overflow-hidden">
-        <title>EduLearn | Course Details</title>
+      <title>EduLearn | Course Details</title>
       {/* Image */}
       <div className="relative">
         <img
@@ -120,20 +134,17 @@ const CourseDetails = () => {
             <p>{courseDetails.course_end_date}</p>
           </div>
         </div>
-
-        {/* ✅ Conditional Buttons */}
         <div className="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
           <p className="text-lg font-semibold">Price: ৳{courseDetails.price}</p>
           <div className="flex flex-col gap-3">
             {user?.email !== courseDetails.created_by && (
               <button
                 onClick={handleEnrolled}
-                className="bg-primary text-white px-8 py-3 rounded-xl hover:bg-indigo-600 transition-all"
+                className="bg-primary text-white px-8 py-3 rounded-xl hover:bg-indigo-600 transition-all cursor-pointer"
               >
                 Enroll Now
               </button>
             )}
-            {/* Show Update button only if user is the course creator */}
             {user?.email === courseDetails.created_by && (
               <Link
                 to={`/update-course/${courseDetails._id}`}
@@ -153,8 +164,6 @@ const CourseDetails = () => {
           </div>
         </div>
       </div>
-
-      {/* Back Button */}
       <div className="p-4">
         <button
           onClick={() => navigate(-1)}

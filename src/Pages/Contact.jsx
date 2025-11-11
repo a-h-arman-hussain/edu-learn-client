@@ -27,7 +27,6 @@ const Contact = () => {
         Have questions or feedback? Reach out to us and we’ll get back to you as
         soon as possible.
       </p>
-
       {/* Contact Form */}
       <form
         onSubmit={handleSubmit}
@@ -44,7 +43,6 @@ const Contact = () => {
             className="input input-bordered w-full border px-4 py-2 rounded-lg"
           />
         </div>
-
         {/* Email */}
         <div>
           <label className="block text-gray-700 font-medium mb-2">Email</label>
@@ -56,7 +54,6 @@ const Contact = () => {
             className="input input-bordered w-full border px-4 py-2 rounded-lg"
           />
         </div>
-
         {/* Subject */}
         <div>
           <label className="block text-gray-700 font-medium mb-2">
@@ -70,7 +67,6 @@ const Contact = () => {
             className="input input-bordered w-full border px-4 py-2 rounded-lg"
           />
         </div>
-
         {/* Message */}
         <div>
           <label className="block text-gray-700 font-medium mb-2">
@@ -84,7 +80,6 @@ const Contact = () => {
             className="textarea textarea-bordered w-full border px-4 py-2 rounded-lg"
           ></textarea>
         </div>
-
         {/* Submit Button */}
         <button
           type="submit"
@@ -93,8 +88,6 @@ const Contact = () => {
           Send Message
         </button>
       </form>
-
-      {/* Optional Contact Info */}
       <div className="mt-12 text-center text-gray-600">
         <p>Email: aharmanhussain@gmail.com</p>
         <p>Phone: +880 131 531 5449</p>

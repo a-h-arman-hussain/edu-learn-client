@@ -14,8 +14,6 @@ const Navbar = () => {
     logOut?.();
     setOpen(false);
   };
-
-  // ✅ Close dropdown when clicked outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -96,9 +94,9 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-50 px-4 md:px-10">
+    <div className="navbar bg-base-100 sticky top-0 z-50  md:px-10">
       {/* LEFT */}
-      <div className="navbar-start">
+      <div className="navbar-start gap-3">
         <div className="dropdown lg:hidden">
           <label tabIndex={0} className="btn btn-ghost p-1">
             <svg
@@ -126,7 +124,7 @@ const Navbar = () => {
 
         <Link
           to="/"
-          className="flex justify-center items-center text-2xl font-extrabold text-primary tracking-wide"
+          className="flex items-center text-2xl font-extrabold text-primary tracking-wide"
         >
           <img className="w-10" src={logo} alt="" />
           <span className="hidden sm:block">EduLearn</span>
@@ -197,7 +195,7 @@ const Navbar = () => {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full px-3 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition"
+                  className="w-full px-3 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition cursor-pointer"
                 >
                   Logout
                 </button>

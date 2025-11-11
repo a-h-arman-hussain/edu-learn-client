@@ -21,7 +21,7 @@ const AddCourse = () => {
       created_ad: new Date(),
     };
 
-    fetch("http://localhost:4000/courses", {
+    fetch("https://my-assignment-10-server-1.onrender.com/courses", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -49,11 +49,10 @@ const AddCourse = () => {
 
   return (
     <div className="max-w-4xl mx-auto my-12 p-8 bg-white rounded-2xl shadow-lg">
-        <title>EduLearn | Add Course</title>
-      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-        Add a New Course
-      </h1>
-
+      <title>EduLearn | Add Course</title>
+      <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-6">
+        Add a New <span className="text-primary">Course</span>
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Title */}
         <div>
@@ -78,7 +77,6 @@ const AddCourse = () => {
             className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Price */}
           <div>
@@ -91,7 +89,6 @@ const AddCourse = () => {
               className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
             />
           </div>
-
           {/* Duration */}
           <div>
             <label className="block font-semibold mb-1">Duration</label>
@@ -104,7 +101,6 @@ const AddCourse = () => {
             />
           </div>
         </div>
-
         {/* Category */}
         <div>
           <label className="block font-semibold mb-1">Category</label>
@@ -123,7 +119,6 @@ const AddCourse = () => {
             <option value="UI/UX Design" />
           </datalist>
         </div>
-
         {/* Dates */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -145,7 +140,6 @@ const AddCourse = () => {
             />
           </div>
         </div>
-
         {/* Description */}
         <div>
           <label className="block font-semibold mb-1">Description</label>

@@ -21,10 +21,9 @@ const MyEnrolledCourse = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <title>EduLearn | My Enrolled Curse</title>
-      <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-        My Enrolled Courses
-      </h1>
-
+      <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-8">
+        My Enrolled <span className="text-primary">Course</span>
+      </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {myEnrolledCourse.map((course) => (
           <div
@@ -50,7 +49,7 @@ const MyEnrolledCourse = () => {
                 {course.title}
               </h2>
               <div className="flex justify-between items-center mt-2 text-gray-700">
-                <span className="text-sm">{course.duration || "N/A"}</span>
+                <span className="text-sm">Duration: {course.duration}Weeks</span>
                 <span className="text-sm font-semibold">৳{course.price}</span>
               </div>
 

@@ -41,7 +41,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-100 to-blue-200 flex items-center justify-center px-4">
-        <title>EduLearn | Register</title>
+      <title>EduLearn | Register</title>
       <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
         <h2 className="text-3xl font-bold text-center text-primary mb-2">
           Create Account
@@ -65,7 +65,7 @@ const Register = () => {
           </div>
           <div>
             <label className="label">
-              <span className="label-text font-medium">Full Name</span>
+              <span className="label-text font-medium">Photo URL</span>
             </label>
             <input
               type="text"

@@ -13,12 +13,12 @@ const Courses = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <title>EduLearn | All Course</title>
-      {/* Heading */}
+
       <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-800 text-center mb-12">
         Our <span className="text-primary">Courses</span>
       </h2>
 
-      {/* Courses Grid */}
+
       {!loading && !error && courses.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => (
