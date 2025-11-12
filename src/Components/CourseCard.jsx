@@ -44,30 +44,14 @@ const CourseCard = ({ course }) => {
         <div className="text-xs text-gray-400 mt-1">
           Start {course.course_start_date}
         </div>
-        <motion.div
-          className="mt-auto w-full rounded-xl p-[2px] overflow-hidden relative"
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-          }}
-          transition={{
-            duration: 4,
-            ease: "linear",
-            repeat: Infinity,
-          }}
-          style={{
-            background:
-              "linear-gradient(90deg, #6366F1, #EC4899, #F59E0B, #10B981)",
-            backgroundSize: "300% 300%",
-          }}
-        >
-          <Link
-            to={`/course-details/${course._id}`}
-            className="block w-full text-center text-white py-2 rounded-lg 
+
+        <Link
+          to={`/course-details/${course._id}`}
+          className="btn btn-primary w-full text-center py-2
                        font-semibold hover:text-gray-200 transition-colors duration-300"
-          >
-            View Details
-          </Link>
-        </motion.div>
+        >
+          View Details
+        </Link>
       </div>
     </motion.div>
   );
