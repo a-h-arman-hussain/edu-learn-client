@@ -7,12 +7,12 @@ import ErrorPage from "./ErrorPage";
 const Courses = () => {
   const { courses, loading, error } = useCourses();
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [open, setOpen] = useState(false); // ✅ custom dropdown control
+  const [open, setOpen] = useState(false);
 
   if (loading) return <Loader />;
   if (error) return <ErrorPage />;
 
-  // ✅ Filtered courses
+  //  Filtered courses
   const filteredCourses =
     selectedCategory === "All"
       ? courses
@@ -21,7 +21,7 @@ const Courses = () => {
             course.category?.toLowerCase() === selectedCategory.toLowerCase()
         );
 
-  // ✅ Unique categories dynamically
+  //  Unique categories dynamically
   const categories = ["All", ...new Set(courses.map((c) => c.category))];
 
   return (
@@ -32,7 +32,7 @@ const Courses = () => {
         Our <span className="text-primary">Courses</span>
       </h2>
 
-      {/* ✅ Filter Header */}
+      {/* Filter Header */}
       <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
         <h1 className="text-lg font-medium">
           <span className="font-semibold text-primary">{selectedCategory}</span>{" "}
@@ -42,7 +42,7 @@ const Courses = () => {
           </span>
         </h1>
 
-        {/* ✅ Custom Dropdown */}
+        {/* Custom Dropdown */}
         <div className="relative">
           <button
             onClick={() => setOpen(!open)}
@@ -92,7 +92,7 @@ const Courses = () => {
         </div>
       </div>
 
-      {/* ✅ Courses Grid */}
+      {/* Courses */}
       {filteredCourses.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCourses.map((course) => (

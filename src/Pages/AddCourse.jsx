@@ -36,7 +36,6 @@ const AddCourse = () => {
         e.target.reset();
       })
       .catch((err) => {
-        console.log(err);
         Swal.fire({
           icon: "error",
           title: "Failed to add course",

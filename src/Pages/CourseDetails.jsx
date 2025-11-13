@@ -9,7 +9,6 @@ import useCourses from "../Hooks/useCourses";
 const CourseDetails = () => {
   const data = useLoaderData();
   const courseDetails = data.result;
-  console.log(courseDetails);
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const { loading, error } = useCourses();
@@ -30,7 +29,7 @@ const CourseDetails = () => {
       created_by: courseDetails.created_by,
       created_ad: courseDetails.created_ad,
     };
-    console.log(enrollData);
+   
     const enrolledCourse = {
       ...enrollData,
       enrolled_by: user?.email,

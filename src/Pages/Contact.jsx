@@ -40,7 +40,7 @@ const Contact = () => {
             name="name"
             required
             placeholder="Your Full Name"
-            className="w-full border text-black border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
         {/* Email */}
@@ -51,7 +51,7 @@ const Contact = () => {
             name="email"
             required
             placeholder="you@example.com"
-            className="w-full border text-black border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
         {/* Subject */}
@@ -64,7 +64,7 @@ const Contact = () => {
             name="subject"
             required
             placeholder="Subject"
-            className="w-full border text-black border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
         {/* Message */}
@@ -77,7 +77,7 @@ const Contact = () => {
             required
             rows="5"
             placeholder="Write your message..."
-            className="w-full border text-black border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           ></textarea>
         </div>
         {/* Submit Button */}

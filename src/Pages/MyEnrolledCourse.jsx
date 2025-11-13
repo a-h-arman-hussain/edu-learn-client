@@ -5,8 +5,7 @@ import ErrorPage from "./ErrorPage";
 
 const MyEnrolledCourse = () => {
   const { myEnrolledCourse, loading, error } = useCourses();
-  console.log(myEnrolledCourse, loading, error);
-
+  
   if (loading) return <Loader />;
   if (error) return <ErrorPage />;
 

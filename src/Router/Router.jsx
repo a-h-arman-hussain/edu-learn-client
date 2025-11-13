@@ -5,7 +5,6 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Home from "../Pages/Home";
 import Courses from "../Pages/Courses";
-// import Dashboard from "../Pages/Dashboard";
 import PrivetRoute from "../Provider/PrivateRoute";
 import MyEnrolledCourse from "../Pages/MyEnrolledCourse";
 import AddCourse from "../Pages/AddCourse";

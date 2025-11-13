@@ -1,21 +1,14 @@
-import React, { use, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import React, { use,  useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { updateProfile } from "firebase/auth";
 
 const Profile = () => {
   const { user } = use(AuthContext);
-  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/auth/login");
-    }
-  }, [user, navigate]);
 
   const handleEditProfile = () => setIsModalOpen(true);
 

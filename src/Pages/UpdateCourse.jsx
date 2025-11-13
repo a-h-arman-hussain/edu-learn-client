@@ -1,7 +1,6 @@
 import React from "react";
 import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import { AuthContext } from "../Provider/AuthProvider";
 
 const UpdateCourse = () => {
   const data = useLoaderData();

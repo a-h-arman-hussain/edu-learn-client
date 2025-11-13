@@ -43,7 +43,6 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* Optional Image / Illustration */}
       <div className="mt-16 flex justify-center">
         <img
           src="https://media.istockphoto.com/id/1286378180/vector/website-information-concept.jpg?s=612x612&w=0&k=20&c=6v9Hcbp0zp5itIPIywobPQF13YsHIQ4j_srF5VbQusY="

@@ -8,7 +8,6 @@ const Register = () => {
   const { createUser, setUser } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-//   const [error, setError] = useState("");
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 

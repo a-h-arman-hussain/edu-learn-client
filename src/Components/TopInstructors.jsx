@@ -28,7 +28,6 @@ const TopInstructors = () => {
 
         {/* Marquee Container */}
         <div className="overflow-hidden relative">
-          {/* Gradient overlay for modern effect */}
           <div className="absolute inset-y-0 left-0 w-24 to-transparent pointer-events-none"></div>
           <div className="absolute inset-y-0 right-0 w-24 to-transparent pointer-events-none"></div>
 
@@ -55,7 +54,7 @@ const TopInstructors = () => {
         </div>
       </div>
 
-      {/* Tailwind marquee animation */}
+      {/* marquee animation */}
       <style jsx>{`
         @keyframes marquee {
           0% {

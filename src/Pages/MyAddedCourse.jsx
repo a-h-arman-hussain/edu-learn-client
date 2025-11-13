@@ -7,10 +7,9 @@ import CourseCard from "../Components/CourseCard";
 const MyAddedCourse = () => {
   const { myCourse, loading, error } = useCourses();
 
-  // Loading state
-  if (loading) return <Loader />;
-
-  // Error state
+  // Loading
+  if (loading) return <Loader />
+  // Error
   if (error) return <ErrorPage />;
 
   return (
