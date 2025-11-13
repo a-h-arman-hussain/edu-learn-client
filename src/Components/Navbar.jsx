@@ -5,6 +5,7 @@ import { FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import logo from "../assets/logo.png";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext) || {};
@@ -159,17 +160,14 @@ const Navbar = () => {
           </label>
 
           <label className="swap swap-rotate cursor-pointer">
-            {/* Checkbox controls the state */}
             <input
               id="theme-toggle"
               type="checkbox"
               onChange={(e) => handleTheme(e.target.checked)}
             />
 
-            {/* 🌙 Dark Mode Icon (visible when unchecked = light mode) */}
             <FaMoon className="swap-off text-blue-500 text-xl" />
 
-            {/* ☀️ Light Mode Icon (visible when checked = dark mode) */}
             <FaSun className="swap-on text-yellow-400 text-xl" />
           </label>
         </div>
@@ -208,7 +206,7 @@ const Navbar = () => {
                       )}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-700">
+                      <p className="font-semibold text-primary">
                         {user.displayName}
                       </p>
                       <p className="text-sm text-gray-500 truncate">
@@ -221,11 +219,12 @@ const Navbar = () => {
                     to="/profile"
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
-                      `px-3 py-2 rounded-lg text-gray-700 hover:bg-primary hover:text-white transition ${
+                      `btn btn-outline px-3 py-2 rounded-lg text-primary hover:bg-primary hover:text-white hover:border-none transition ${
                         isActive ? "bg-primary text-white font-semibold" : ""
                       }`
                     }
                   >
+                    <CgProfile size={20} />
                     View Profile
                   </NavLink>
 

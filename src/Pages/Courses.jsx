@@ -7,6 +7,7 @@ import ErrorPage from "./ErrorPage";
 const Courses = () => {
   const { courses, loading, error } = useCourses();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [open, setOpen] = useState(false); // ✅ custom dropdown control
 
   if (loading) return <Loader />;
   if (error) return <ErrorPage />;
@@ -20,11 +21,8 @@ const Courses = () => {
             course.category?.toLowerCase() === selectedCategory.toLowerCase()
         );
 
-  // ✅ Unique category list dynamically
-  const categories = [
-    "All",
-    ...new Set(courses.map((course) => course.category)),
-  ];
+  // ✅ Unique categories dynamically
+  const categories = ["All", ...new Set(courses.map((c) => c.category))];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -34,45 +32,63 @@ const Courses = () => {
         Our <span className="text-primary">Courses</span>
       </h2>
 
-      {/* ✅ Dropdown + Dynamic Count */}
-      <div className="flex justify-between items-center mb-8">
+      {/* ✅ Filter Header */}
+      <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
         <h1 className="text-lg font-medium">
-          Total Courses{" "}
-          <span className=" text-sm">
-            <span className=" font-bold text-primary">
-              ({filteredCourses.length})
-            </span>
-            Found
+          <span className="font-semibold text-primary">{selectedCategory}</span>{" "}
+          Courses{" "}
+          <span className="text-sm text-gray-500">
+            ({filteredCourses.length} Found)
           </span>
         </h1>
 
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn m-1 bg-primary hover:bg-indigo-600"
+        {/* ✅ Custom Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setOpen(!open)}
+            className="btn bg-primary text-white hover:bg-indigo-600 px-5 py-2 rounded-lg transition flex items-center gap-2"
           >
             {selectedCategory === "All" ? "Sort By Category" : selectedCategory}
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu text-black bg-white border border-gray-200 rounded-xl z-[1] w-56 p-2 shadow-lg"
-          >
-            {categories.map((cat, i) => (
-              <li key={i}>
-                <button
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`${
-                    selectedCategory === cat
-                      ? "bg-primary text-white"
-                      : "hover:bg-gray-100"
-                  } rounded-lg text-left px-3 py-2 transition`}
-                >
-                  {cat}
-                </button>
-              </li>
-            ))}
-          </ul>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`w-4 h-4 transition-transform ${
+                open ? "rotate-180" : ""
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {/* Dropdown Menu */}
+          {open && (
+            <ul className="absolute right-0 mt-2 text-black bg-white border border-gray-200 rounded-xl shadow-lg z-[9999] w-56 p-2 animate-fadeIn">
+              {categories.map((cat, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => {
+                      setSelectedCategory(cat);
+                      setOpen(false);
+                    }}
+                    className={`block w-full text-left px-3 py-2 rounded-lg transition cursor-pointer ${
+                      selectedCategory === cat
+                        ? "bg-primary text-white"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
