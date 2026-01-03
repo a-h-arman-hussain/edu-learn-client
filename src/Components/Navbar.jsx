@@ -63,46 +63,6 @@ const Navbar = () => {
           All Courses
         </NavLink>
       </li>
-      {user && (
-        <>
-          <li>
-            <NavLink
-              to="/my-added-course"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary font-semibold border-b-2 border-primary"
-                  : "hover:text-primary transition"
-              }
-            >
-              My Added Course
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/my-enrolled-course"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary font-semibold border-b-2 border-primary"
-                  : "hover:text-primary transition"
-              }
-            >
-              My Enrolled
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/add-course"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-primary font-semibold border-b-2 border-primary"
-                  : "hover:text-primary transition"
-              }
-            >
-              Add Course
-            </NavLink>
-          </li>
-        </>
-      )}
     </>
   );
 
@@ -214,6 +174,17 @@ const Navbar = () => {
                       </p>
                     </div>
                   </div>
+                  <NavLink
+                    to="/dashboard"
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `btn btn-outline px-3 py-2 rounded-lg text-primary hover:bg-primary hover:text-white hover:border-none transition ${
+                        isActive ? "bg-primary text-white font-semibold" : ""
+                      }`
+                    }
+                  >
+                    Dashboard
+                  </NavLink>
 
                   <NavLink
                     to="/profile"

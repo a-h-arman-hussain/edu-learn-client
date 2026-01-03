@@ -16,6 +16,7 @@ import AboutUs from "../Pages/AboutUs";
 import Contact from "../Pages/Contact";
 import Profile from "../Pages/Profile";
 import ForgetPassword from "../Pages/ForgatPassword";
+import DashboardLayout from "../Layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -30,37 +31,11 @@ const router = createBrowserRouter([
         path: "/courses",
         Component: Courses,
       },
-      {
-        path: "/my-enrolled-course",
-        element: (
-          <PrivetRoute>
-            <MyEnrolledCourse></MyEnrolledCourse>
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "/add-course",
-        element: (
-          <PrivetRoute>
-            <AddCourse></AddCourse>
-          </PrivetRoute>
-        ),
-      },
-      {
-        path: "/my-added-course",
-        element: (
-          <PrivetRoute>
-            <MyAddedCourse></MyAddedCourse>
-          </PrivetRoute>
-        ),
-      },
+
       {
         path: "/course-details/:id",
-        element: (
-          <PrivetRoute>
-            <CourseDetails></CourseDetails>
-          </PrivetRoute>
-        ),
+        Component: CourseDetails,
+
         loader: ({ params }) =>
           fetch(
             `https://my-assignment-10-server-1.onrender.com/courses/${params.id}`
@@ -86,13 +61,31 @@ const router = createBrowserRouter([
         path: "/contact",
         Component: Contact,
       },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivetRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivetRoute>
+    ),
+    children: [
       {
-        path: "/profile",
-        element: (
-          <PrivetRoute>
-            <Profile></Profile>
-          </PrivetRoute>
-        ),
+        path: "my-enrolled-course",
+        element: <MyEnrolledCourse></MyEnrolledCourse>,
+      },
+      {
+        path: "add-course",
+        element: <AddCourse></AddCourse>,
+      },
+      {
+        path: "my-added-course",
+        element: <MyAddedCourse></MyAddedCourse>,
+      },
+      {
+        path: "profile",
+        element: <Profile></Profile>,
       },
     ],
   },
