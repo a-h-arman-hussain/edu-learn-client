@@ -1,12 +1,47 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @import "tailwindcss";
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
+
+/* DaisyUI প্লাগইন লোড করা (অপশন ছাড়া) */
+@plugin "daisyui";
+
+/* Tailwind v4 এ থিম এবং কালার ভেরিয়েবল কাস্টমাইজেশন */
+@theme {
+  /* প্রফেশনাল কালার প্যালেট */
+  --color-primary: #4338ca; /* Indigo 700 */
+  --color-secondary: #0f172a; /* Slate 900 (Professional Sidebar) */
+  --color-accent: #0ea5e9; /* Sky 500 */
+  --color-neutral: #64748b; /* Slate 500 */
+
+  --color-base-100: #ffffff; /* Pure White for Cards */
+  --color-base-200: #f8fafc; /* Slate 50 for Page Background */
+
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+
+  /* বর্ডার রেডিয়াস */
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+/* গ্লোবাল স্টাইল */
 * {
   font-family: "Poppins", sans-serif;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
 }

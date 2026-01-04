@@ -1,6 +1,13 @@
 import React, { use, useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate, useLocation } from "react-router";
+import {
+  FiUser,
+  FiMail,
+  FiLock,
+  FiImage,
+  FiEye,
+  FiEyeOff, // FiEyeSlash এর বদলে FiEyeOff ব্যবহার করুন
+} from "react-icons/fi";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 
@@ -8,36 +15,41 @@ const Register = () => {
   const { createUser, setUser } = use(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
   const handleRegister = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const photoUrl = e.target.photoUrl.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
+    const form = e.target;
+    const name = form.name.value;
+    const photoUrl = form.photoUrl.value;
+    const email = form.email.value;
+    const password = form.password.value;
 
     if (!passwordRegex.test(password)) {
       Swal.fire({
         icon: "warning",
-        title: "Invalid Password Format!",
-        text: "Password must contain at least one uppercase letter, one lowercase letter, and be at least 6 characters long.",
-        confirmButtonColor: "#6366f1",
+        title: "Weak Password!",
+        text: "পাসওয়ার্ডে অন্তত একটি বড় হাতের অক্ষর, একটি ছোট হাতের অক্ষর এবং সর্বনিম্ন ৬টি ক্যারেক্টার থাকতে হবে।",
+        confirmButtonColor: "#4338ca",
+        customClass: { popup: "rounded-[2rem]" },
       });
       return;
     }
+
     createUser(email, password)
       .then((res) => {
         const user = res.user;
         Swal.fire({
           icon: "success",
           title: "Account Created!",
-          text: `Welcome, ${name}! You can now log in.`,
+          text: `স্বাগতম ${name}! আপনার অ্যাকাউন্টটি সফলভাবে তৈরি হয়েছে।`,
           timer: 2500,
           showConfirmButton: false,
+          customClass: { popup: "rounded-[2rem]" },
         });
+
         setUser({ ...user, displayName: name, photoURL: photoUrl });
         const from = location.state?.from?.pathname || "/";
         navigate(from, { replace: true });
@@ -47,97 +59,122 @@ const Register = () => {
           icon: "error",
           title: "Registration Failed",
           text: error.message,
+          customClass: { popup: "rounded-[2rem]" },
         });
       });
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 relative overflow-hidden rounded-[2.5rem] ">
       <title>EduLearn | Register</title>
-      <div className="w-full bg-white shadow-2xl rounded-2xl p-8">
-        <h2 className="text-3xl font-bold text-center text-primary mb-2">
-          Create Account
-        </h2>
-        <p className="text-center text-black mb-8">
-          Sign up to start your learning journey
-        </p>
 
-        <form onSubmit={handleRegister} className="space-y-5">
-          <div>
-            <label className="label">
-              <span className="label-text text-primary font-medium">Full Name</span>
-            </label>
-            <input
-              type="text"
-              name="name"
-              required
-              placeholder="Your Name"
-              className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          <div>
-            <label className="label">
-              <span className="label-text text-primary font-medium">Photo URL</span>
-            </label>
-            <input
-              type="text"
-              name="photoUrl"
-              required
-              placeholder="Photo URL"
-              className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
+     
 
-          <div>
-            <label className="label">
-              <span className="label-text text-primary font-medium">Email Address</span>
+      <div className="max-w-xl w-full">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-black text-secondary tracking-tight">
+            Create <span className="text-primary">Account</span>
+          </h2>
+          <p className="mt-2 text-slate-400 font-medium">
+            আজই যোগ দিন এবং আপনার শেখার যাত্রা শুরু করুন
+          </p>
+        </div>
+
+        <form
+          onSubmit={handleRegister}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {/* Full Name */}
+          <div className="md:col-span-1">
+            <label className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              Full Name
             </label>
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="you@example.com"
-              className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+            <div className="relative mt-2">
+              <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="John Doe"
+                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-secondary rounded-2xl focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none font-medium"
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="label">
-              <span className="label-text text-primary font-medium">Password</span>
+          {/* Photo URL */}
+          <div className="md:col-span-1">
+            <label className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              Photo URL
             </label>
-            <div className="relative">
+            <div className="relative mt-2">
+              <FiImage className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
+              <input
+                type="text"
+                name="photoUrl"
+                required
+                placeholder="https://image.link"
+                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-secondary rounded-2xl focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none font-medium"
+              />
+            </div>
+          </div>
+
+          {/* Email Address */}
+          <div className="md:col-span-2">
+            <label className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              Email Address
+            </label>
+            <div className="relative mt-2">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="name@example.com"
+                className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-secondary rounded-2xl focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none font-medium"
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div className="md:col-span-2">
+            <label className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">
+              Secure Password
+            </label>
+            <div className="relative mt-2">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 required
                 placeholder="••••••••"
-                className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full pl-11 pr-12 py-3.5 bg-slate-50 border border-slate-100 text-secondary rounded-2xl focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none font-medium"
               />
-              <span
+              <button
+                type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 cursor-pointer text-gray-500 hover:text-primary z-10"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-primary transition-colors"
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+              </button>
             </div>
           </div>
 
-          <button className="btn btn-primary w-full text-lg font-semibold">
-            Register
+          <button className="md:col-span-2 w-full py-4 bg-primary text-white text-sm font-black rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 mt-4">
+            Create Account
           </button>
         </form>
 
-        <div className="divider my-6 text-gray-400">OR</div>
-
-        <p className="text-center text-sm text-gray-600 mt-8">
-          Already have an account?{" "}
-          <Link
-            to="/auth/login"
-            className="text-primary font-semibold hover:underline"
-          >
-            Login
-          </Link>
-        </p>
+        <div className="mt-4 text-center">
+          <p className="text-sm text-slate-500 font-medium">
+            Already have an account?{" "}
+            <Link
+              to="/auth/login"
+              className="text-primary font-black hover:underline underline-offset-4"
+            >
+              Log in instead
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

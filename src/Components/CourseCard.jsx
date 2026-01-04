@@ -1,53 +1,81 @@
 import React from "react";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
+import { FiClock, FiCalendar } from "react-icons/fi";
 
 const CourseCard = ({ course }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      whileHover={{ scale: 1.03 }}
-      className="max-w-sm bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col 
-                 transform transition-all duration-300 hover:shadow-2xl"
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+      className="rounded-2xl shadow-sm hover:shadow-xl overflow-hidden
+                 flex flex-col border border-slate-100 group transition-all"
+      style={{ width: "290px", height: "350px" }}
     >
-      {/* Image */}
-      <div className="relative">
-        <motion.img
+      {/* Image Section */}
+      <div className="relative h-[150px] w-full overflow-hidden">
+        <img
           src={course.imageURL}
           alt={course.title}
-          className="w-full h-48 object-cover"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.4 }}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
-        {/* Category */}
-        <span className="absolute top-3 left-3 bg-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        <span
+          className="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-primary 
+                     text-[10px] font-bold px-2.5 py-1 rounded-lg shadow-sm uppercase tracking-wider"
+        >
           {course.category}
         </span>
       </div>
 
-      <div className="p-6 flex flex-col gap-3 flex-1">
-        <div>
-          {/* Title */}
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 truncate">
-            {course.title}
-          </h2>
-          {/* Email */}
-          <p className="text-xs text-gray-400">Created By: {course.created_by}</p>
+      {/* Content Section */}
+      <div className="p-5 flex flex-col flex-1">
+        {/* Title */}
+        <h3 className="text-sm text-secondary font-bold leading-snug line-clamp-1 group-hover:text-primary transition-colors">
+          {course.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-[12px] line-clamp-2 leading-relaxed">
+          {course.description}
+        </p>
+
+        {/* Meta Info */}
+        <div className="flex items-center justify-between mt-2 pb-3 border-b">
+          <div className="flex gap-1.5 text-[11px]">
+            <FiClock className="text-primary" />
+            <span>{course.duration} Weeks</span>
+          </div>
+          <div className="text-sm font-bold text-secondary">
+            <span className="text-primary mr-0.5">৳</span>
+            {course.price}
+          </div>
         </div>
-        {/* Duration & Price */}
-        <div className="flex justify-between items-center text-gray-600 mt-2">
-          <span className="text-sm">Duration {course.duration}Weeks</span>
-          <span className="text-sm font-semibold">৳{course.price}</span>
+
+        {/* Bottom Section */}
+        <div className="flex items-center justify-between mt-3 mb-2">
+          <div className="flex items-center gap-1 text-[10px] text-slate-400 font-medium">
+            <FiCalendar />
+            {new Date(course.created_ad).toLocaleDateString()}
+          </div>
+
+          <Link
+            to={`/course-details/${course._id}`}
+            className="text-primary text-xs font-bold hover:underline underline-offset-4"
+          >
+            Details
+          </Link>
         </div>
+
+        {/* Primary Action Button */}
         <Link
           to={`/course-details/${course._id}`}
-          className="btn btn-primary w-full text-center py-2
-                       font-semibold hover:text-gray-200 transition-colors duration-300"
+          className="mt-auto text-center bg-primary text-white
+                     text-xs py-2.5 rounded-xl font-bold
+                     shadow-sm hover:bg-indigo-700 
+                     active:scale-95 transition-all"
         >
-          View Details
+          Enroll Now
         </Link>
       </div>
     </motion.div>

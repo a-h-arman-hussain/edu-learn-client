@@ -1,148 +1,196 @@
-import React, { use, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router"; // ✅ react-router-dom
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState, useContext } from "react";
+import { Link, useNavigate, useLocation } from "react-router";
+import { FaEye, FaEyeSlash, FaLock, FaEnvelope } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Login = () => {
-  const { login, loginWithGoogle } = use(AuthContext);
+  const { login, loginWithGoogle } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
   const location = useLocation();
-
   const from = location.state?.from?.pathname || "/";
 
-  //  Email/Password login
+  const handleDemoLogin = () => {
+    setEmail("admin@gmail.com");
+    setPassword("Admin!123");
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "info",
+      title: "Demo credentials applied!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
     login(email, password)
       .then((result) => {
         Swal.fire({
           icon: "success",
           title: "Welcome back!",
-          text: `${result.user.displayName} logged in successfully.`,
+          text: `${result.user.displayName || "User"} logged in successfully.`,
           timer: 2000,
           showConfirmButton: false,
         });
         navigate(from, { replace: true });
       })
-      .catch((error) => {
+      .catch(() => {
         Swal.fire({
           icon: "error",
           title: "Login Failed",
-          text: error.message,
+          text: "Invalid email or password. Please try again.",
         });
       });
   };
 
-  //  Google login
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then((result) => {
         Swal.fire({
           icon: "success",
           title: "Logged in with Google!",
-          text: `Welcome, ${result.user.displayName}`,
           timer: 2000,
           showConfirmButton: false,
         });
         navigate(from, { replace: true });
       })
       .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Google Login Failed",
-          text: error.message,
-        });
+        Swal.fire({ icon: "error", title: "Oops!", text: error.message });
       });
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden rounded-[2.5rem]">
       <title>EduLearn | Login</title>
-      <div className="w-full bg-white shadow-2xl rounded-2xl p-8">
-        <h2 className="text-3xl font-bold text-center text-primary mb-2">
-          Welcome Back
-        </h2>
-        <p className="text-center text-black mb-4">
-          Please log in to continue learning
-        </p>
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label className="label">
-              <span className="label-text text-primary font-medium">
+     
+      <div className="max-w-md w-full space-y-8">
+        <div className="text-center">
+          <div className="mx-auto h-16 w-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
+            <FaLock className="text-primary text-2xl" />
+          </div>
+          <h2 className="text-3xl font-black text-secondary tracking-tight">
+            Welcome Back
+          </h2>
+          <p className="mt-2 text-sm text-slate-400 font-medium">
+            আপনার লার্নিং জার্নি পুনরায় শুরু করতে লগইন করুন
+          </p>
+        </div>
+
+        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+          <div className="space-y-4">
+            {/* Email Field */}
+            <div>
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-widest ml-1">
                 Email Address
-              </span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="you@example.com"
-              className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <div>
-            <label className="label">
-              <span className="label-text text-primary font-medium">
-                Password
-              </span>
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                required
-                placeholder="••••••••"
-                className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-              <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 cursor-pointer text-gray-500 hover:text-primary z-10"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              </label>
+              <div className="relative mt-1">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <FaEnvelope className="text-slate-300" />
+                </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-100 text-secondary placeholder-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all font-medium"
+                  placeholder="name@example.com"
+                />
+              </div>
             </div>
 
-            <div className="text-right mt-1">
-              <Link
-                to="/auth/forget-password"
-                type="button"
-                className="text-sm text-primary hover:underline"
-              >
-                Forgot Password?
-              </Link>
+            {/* Password Field */}
+            <div>
+              <div className="flex justify-between items-center ml-1">
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  Password
+                </label>
+                <Link
+                  to="/auth/forget-password"
+                  size="sm"
+                  className="text-xs font-bold text-primary hover:underline"
+                >
+                  Forgot?
+                </Link>
+              </div>
+              <div className="relative mt-1">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <FaLock className="text-slate-300" />
+                </div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="block w-full pl-11 pr-12 py-3.5 bg-slate-50 border border-slate-100 text-secondary placeholder-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all font-medium"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-primary transition-colors"
+                >
+                  {showPassword ? (
+                    <FaEyeSlash size={18} />
+                  ) : (
+                    <FaEye size={18} />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
 
-          <button className="btn btn-primary w-full text-lg font-semibold">
-            Login
-          </button>
+          <div className="space-y-4">
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-black rounded-2xl text-white bg-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-xl shadow-indigo-100 transition-all duration-300 active:scale-95"
+            >
+              Log in to Account
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              className="w-full py-3 px-4 border-2 border-dashed border-slate-200 rounded-2xl text-xs font-bold text-slate-500 hover:border-primary hover:text-primary hover:bg-indigo-50/30 transition-all"
+            >
+              🚀 Use Demo Admin Access
+            </button>
+          </div>
         </form>
 
-        <div className="divider my-6 text-gray-400">OR</div>
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-100"></div>
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-white px-4 text-slate-400 font-bold tracking-widest">
+              Or continue with
+            </span>
+          </div>
+        </div>
 
         <button
           onClick={handleGoogleLogin}
-          className="btn btn-outline text-primary w-full flex items-center justify-center gap-2 hover:bg-blue-50 hover:border-primary"
+          className="w-full flex items-center justify-center gap-3 px-4 py-3.5 border border-slate-200 rounded-2xl text-sm font-bold text-secondary hover:bg-slate-50 transition-all active:scale-95"
         >
           <FcGoogle size={22} />
-          Continue with Google
+          Sign in with Google
         </button>
 
-        <p className="text-center text-sm text-gray-600 mt-8">
-          Don’t have an account?{" "}
+        <p className="text-center text-sm text-slate-500 font-medium">
+          Don't have an account?{" "}
           <Link
             to="/auth/register"
-            className="text-primary font-semibold hover:underline"
+            className="text-primary font-black hover:underline underline-offset-4"
           >
-            Create one
+            Create for free
           </Link>
         </p>
       </div>

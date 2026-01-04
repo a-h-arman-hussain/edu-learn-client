@@ -1,4 +1,5 @@
 import React from "react";
+import { FaLinkedin, FaGlobe } from "react-icons/fa";
 import arman from "../assets/arman.jpg";
 import saim from "../assets/saim.jpg";
 import raihan from "../assets/raihan.jpg";
@@ -13,66 +14,63 @@ const instructors = [
 
 const TopInstructors = () => {
   return (
-    <section className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10">
+    <section className="mt-15 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-4xl font-extrabold">
-            Meet Our <span className="text-primary">Top Instructors</span>
+        <div className="text-center mb-8">
+          <h2 className="text-sm font-bold text-primary uppercase tracking-[0.2em] mb-3">
+            Expert Mentors
           </h2>
-          <p className="mt-4 max-w-xl mx-auto">
-            Learn from the best in the industry. Our instructors are experts in
-            their fields with years of experience.
+          <h3 className="text-3xl md:text-5xl font-extrabold text-secondary">
+            Meet Our <span className="text-primary">Top Instructors</span>
+          </h3>
+          <p className="mt-4 max-w-2xl mx-auto text-lg">
+            Learn from the best in the industry. Our instructors are experts
+            with years of real-world experience.
           </p>
         </div>
 
         {/* Marquee Container */}
-        <div className="overflow-hidden relative">
-          <div className="absolute inset-y-0 left-0 w-24 to-transparent pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-24 to-transparent pointer-events-none"></div>
-
-          <div className="flex animate-marquee gap-8 py-5 hover:pause">
-            {instructors.concat(instructors).map((instructor, idx) => (
+        <div className="relative group">
+          {/* Marquee Motion */}
+          <div className="flex animate-marquee gap-8 group-hover:[animation-play-state:paused]">
+            {[...instructors, ...instructors].map((instructor, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-transform duration-300 transform hover:scale-105 p-6 text-center flex-shrink-0 w-64"
+                className="rounded-[2rem] border border-secondary hover:border-primary shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 p-4 text-center flex-shrink-0 w-72 group/card"
               >
-                <div className="w-24 h-24 mx-auto mb-4">
+                {/* Image Wrap */}
+                <div className="relative w-32 h-32 mx-auto mb-6">
+                  <div className="absolute inset-0 bg-primary/10 rounded-full scale-110 group-hover/card:scale-125 transition-transform duration-500"></div>
                   <img
                     src={instructor.photo}
                     alt={instructor.name}
-                    className="w-full h-full object-cover rounded-full shadow-md"
+                    className="relative z-10 w-full h-full object-cover rounded-full border-4 border-white shadow-md"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-800">
+
+                {/* Info */}
+                <h4 className="text-xl font-bold text-secondary group-hover/card:text-primary transition-colors">
                   {instructor.name}
-                </h3>
-                <p className="text-gray-500">{instructor.role}</p>
+                </h4>
+                <p className="font-medium text-sm mb-6 uppercase tracking-wider">
+                  {instructor.role}
+                </p>
+
+                {/* Social Placeholder */}
+                <div className="flex justify-center gap-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                  <button className="p-2 hover:bg-primary hover:text-white rounded-lg transition-all">
+                    <FaLinkedin size={18} />
+                  </button>
+                  <button className="p-2 hover:bg-primary hover:text-white rounded-lg transition-all">
+                    <FaGlobe size={18} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* marquee animation */}
-      <style jsx>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-marquee {
-          display: flex;
-          width: max-content;
-          animation: marquee 25s linear infinite;
-        }
-        .hover\\:pause:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </section>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
+import { FiBookOpen, FiImage, FiDollarSign, FiClock, FiTag, FiAlignLeft } from "react-icons/fi";
 
 const AddCourse = () => {
   const { user } = useContext(AuthContext);
@@ -28,125 +29,144 @@ const AddCourse = () => {
       .then(() => {
         Swal.fire({
           icon: "success",
-          title: `✅ ${formData.title}`,
-          text: "Your course has been successfully added.",
-          timer: 2000,
-          showConfirmButton: false,
+          title: "Course Added!",
+          text: `${formData.title} has been successfully published.`,
+          confirmButtonColor: "#4338ca", // Your Primary Indigo
+          timer: 2500,
         });
         e.target.reset();
       })
       .catch((err) => {
         Swal.fire({
           icon: "error",
-          title: "Failed to add course",
-          text: "Something went wrong. Please try again.",
+          title: "Oops...",
+          text: "Something went wrong. Please try again later.",
+          confirmButtonColor: "#ef4444",
         });
       });
   };
 
+  const labelStyle = "flex items-center gap-2 text-sm font-bold text-secondary mb-2 uppercase tracking-wide";
+  const inputStyle = "w-full border border-secondary text-secondary px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 placeholder:text-slate-400";
+
   return (
-    <div className="max-w-4xl mx-auto my-12 p-8 bg-white rounded-2xl shadow-lg">
+    <div className="max-w-4xl mx-auto">
       <title>EduLearn | Add Course</title>
-      <h2 className="text-2xl md:text-4xl font-extrabold text-gray-800 text-center mb-6">
-        Add a New <span className="text-primary">Course</span>
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Title */}
-        <div>
-          <label className="block text-primary font-semibold mb-1">
-            Course Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            required
-            placeholder="Full-Stack Web Development Bootcamp"
-            className="w-full bg-none border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-        </div>
+      
+      {/* Header */}
+      <div className="mb-10">
+        <h2 className="text-3xl font-black text-secondary">
+          Create New <span className="text-primary">Course</span>
+        </h2>
+        <p className="mt-2">নতুন একটি কোর্স পাবলিশ করতে নিচের ফর্মটি নির্ভুলভাবে পূরণ করুন।</p>
+      </div>
 
-        {/* Image URL */}
-        <div>
-          <label className="block text-primary font-semibold mb-1">
-            Image URL
-          </label>
-          <input
-            type="url"
-            name="imageURL"
-            required
-            placeholder="https://example.com/course-image.jpg"
-            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Price */}
-          <div>
-            <label className="block text-primary font-semibold mb-1">
-              Price (৳)
+      <div className="p-6 md:p-10 rounded-[2.5rem] border border-secondary shadow-xl shadow-indigo-500/5">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          
+          {/* Title */}
+          <div className="group">
+            <label className={labelStyle}>
+              <FiBookOpen className="text-primary" /> Course Title
             </label>
             <input
-              type="number"
-              name="price"
+              type="text"
+              name="title"
               required
-              placeholder="Your Course Price"
-              className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="e.g. Master Modern Web Development"
+              className={inputStyle}
             />
           </div>
-          {/* Duration */}
-          <div>
-            <label className="block text-primary font-semibold mb-1">
-              Duration <span className="text-sm">(weeks)</span>
+
+          {/* Image URL */}
+          <div className="group">
+            <label className={labelStyle}>
+              <FiImage className="text-primary" /> Cover Image URL
             </label>
             <input
-              type="number"
-              name="duration"
+              type="url"
+              name="imageURL"
               required
-              placeholder="Your Course Duration"
-              className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="https://images.unsplash.com/your-course-thumbnail"
+              className={inputStyle}
             />
           </div>
-        </div>
-        {/* Category */}
-        <div>
-          <label className="block text-primary font-semibold mb-1">
-            Category
-          </label>
-          <input
-            list="categoryOptions"
-            name="category"
-            placeholder="Select or add category"
-            required
-            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-          <datalist id="categoryOptions">
-            <option value="Web Development" />
-            <option value="Graphic Design" />
-            <option value="Data Science" />
-            <option value="Digital Marketing" />
-            <option value="UI/UX Design" />
-          </datalist>
-        </div>
-        {/* Description */}
-        <div>
-          <label className="block text-primary font-semibold mb-1">
-            Description
-          </label>
-          <textarea
-            name="description"
-            required
-            placeholder="Briefly describe the course..."
-            className="w-full border text-black border-indigo-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            rows="10"
-          ></textarea>
-        </div>
 
-        <button
-          type="submit"
-          className="btn w-full btn-primary px-6 py-3 rounded-lg font-semibold hover:bg-indigo-600 transition-colors"
-        >
-          Add Course
-        </button>
-      </form>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Price */}
+            <div>
+              <label className={labelStyle}>
+                <FiDollarSign className="text-primary" /> Price (৳)
+              </label>
+              <input
+                type="number"
+                name="price"
+                required
+                placeholder="2500"
+                className={inputStyle}
+              />
+            </div>
+            {/* Duration */}
+            <div>
+              <label className={labelStyle}>
+                <FiClock className="text-primary" /> Duration (Weeks)
+              </label>
+              <input
+                type="number"
+                name="duration"
+                required
+                placeholder="12"
+                className={inputStyle}
+              />
+            </div>
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className={labelStyle}>
+              <FiTag className="text-primary" /> Category
+            </label>
+            <input
+              list="categoryOptions"
+              name="category"
+              placeholder="Search or select category"
+              required
+              className={inputStyle}
+            />
+            <datalist id="categoryOptions">
+              <option value="Web Development" />
+              <option value="Graphic Design" />
+              <option value="Data Science" />
+              <option value="Digital Marketing" />
+              <option value="UI/UX Design" />
+            </datalist>
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className={labelStyle}>
+              <FiAlignLeft className="text-primary" /> Course Description
+            </label>
+            <textarea
+              name="description"
+              required
+              placeholder="Write a detailed description about what students will learn..."
+              className={`${inputStyle} min-h-[150px] resize-none`}
+              rows="5"
+            ></textarea>
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-4">
+            <button
+              type="submit"
+              className="w-full bg-primary text-white py-4 rounded-2xl font-bold text-lg shadow-md hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              Publish Course
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

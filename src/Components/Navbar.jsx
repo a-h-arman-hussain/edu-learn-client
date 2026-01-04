@@ -2,10 +2,9 @@ import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { FaMoon, FaSun, FaUserCircle } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/logo.png";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
-import { CgProfile } from "react-icons/cg";
+import { FiLogIn, FiLogOut, FiGrid, FiUser, FiMenu } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext) || {};
@@ -19,14 +18,15 @@ const Navbar = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const handleTheme = (checked) => {
-    setTheme(checked ? "dark" : "light");
+  const handleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   const handleLogout = () => {
     logOut?.();
     setOpen(false);
   };
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -39,203 +39,162 @@ const Navbar = () => {
 
   const navLinks = (
     <>
-      <li>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-semibold border-b-2 border-primary"
-              : "hover:text-primary transition"
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/courses"
-          className={({ isActive }) =>
-            isActive
-              ? "text-primary font-semibold border-b-2 border-primary"
-              : "hover:text-primary transition"
-          }
-        >
-          All Courses
-        </NavLink>
-      </li>
+      {["Home", "Courses", "About", "Contact"].map((item) => (
+        <li key={item}>
+          <NavLink
+            to={
+              item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "-")}`
+            }
+            className={({ isActive }) =>
+              `relative px-4 py-2 transition-all duration-300 font-bold hover:text-primary ${
+                isActive ? "text-primary" : "text-secondary dark:text-slate-300"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                {item}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute bottom-0 left-0 w-full h-0.5 bg-primary"
+                  />
+                )}
+              </>
+            )}
+          </NavLink>
+        </li>
+      ))}
     </>
   );
 
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-50  md:px-10">
-      {/* LEFT */}
-      <div className="navbar-start gap-3">
-        <div className="dropdown lg:hidden">
-          <label tabIndex={0} className="btn btn-ghost p-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <div className="sticky top-0 z-[100] w-full bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+      <div className="navbar max-w-7xl mx-auto px-4 lg:px-8">
+        {/* --- Navbar Left --- */}
+        <div className="navbar-start">
+          <div className="dropdown lg:hidden">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle text-primary"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-3 shadow bg-base-100 rounded-box w-56 space-y-1"
-          >
-            {navLinks}
-          </ul>
-        </div>
+              <FiMenu size={24} />
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 p-4 shadow-2xl bg-white dark:bg-slate-800 rounded-3xl w-64 space-y-2 border border-slate-100 dark:border-slate-700"
+            >
+              {navLinks}
+            </ul>
+          </div>
 
-        <Link
-          to="/"
-          className="flex items-center text-2xl font-extrabold text-primary tracking-wide"
-        >
-          <img className="w-10" src={logo} alt="" />
-          <span className="hidden sm:block">EduLearn</span>
-        </Link>
-      </div>
-
-      {/* CENTER */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal gap-6 font-medium">{navLinks}</ul>
-      </div>
-
-      {/* RIGHT */}
-      <div className="navbar-end relative flex items-center gap-2 justify-end">
-        <div className="flex items-center gap-2 border border-primary rounded-lg px-2 py-1 cursor-pointer">
-          <label
-            htmlFor="theme-toggle"
-            className="font-medium text-base cursor-pointer select-none"
-          >
-            Theme
-          </label>
-
-          <label className="swap swap-rotate cursor-pointer">
-            <input
-              id="theme-toggle"
-              type="checkbox"
-              onChange={(e) => handleTheme(e.target.checked)}
+          <Link to="/" className="flex items-center gap-2 group">
+            <motion.img
+              whileHover={{ rotate: 15 }}
+              className="w-10 h-10 object-contain"
+              src={logo}
+              alt="EduLearn Logo"
             />
-
-            <FaMoon className="swap-off text-blue-500 text-xl" />
-
-            <FaSun className="swap-on text-yellow-400 text-xl" />
-          </label>
+            <span className="text-2xl font-black text-secondary dark:text-white tracking-tighter">
+              Edu<span className="text-primary">Learn</span>
+            </span>
+          </Link>
         </div>
-        <div>
+
+        {/* --- Navbar Center --- */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal gap-2 px-1">{navLinks}</ul>
+        </div>
+
+        {/* --- Navbar Right --- */}
+        <div className="navbar-end gap-4">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={handleTheme}
+            className="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-secondary dark:text-yellow-400 hover:scale-110 transition-all active:scale-95"
+          >
+            {theme === "light" ? <FaMoon size={18} /> : <FaSun size={18} />}
+          </button>
+
           {user ? (
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setOpen(!open)}
-                className="btn btn-ghost btn-circle avatar cursor-pointer"
+                className="group relative flex items-center p-1 rounded-full border-2 border-transparent hover:border-primary transition-all"
               >
-                <div className="rounded-full border-2 border-primary overflow-hidden bg-gray-100 hover:scale-110 transition-transform duration-200">
+                <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg border-2 border-white dark:border-slate-700 bg-slate-100">
                   {user.photoURL ? (
                     <img
                       src={user.photoURL}
                       alt="user"
-                      className="object-cover w-full h-full"
+                      className="w-full h-full object-cover"
                     />
                   ) : (
-                    <FaUserCircle className="text-4xl text-gray-400" />
+                    <FaUserCircle className="w-full h-full text-slate-400" />
                   )}
                 </div>
               </button>
 
-              {open && (
-                <ul className="absolute right-0 mt-3 p-4 shadow-lg bg-white rounded-xl w-64 border border-gray-200 flex flex-col gap-3 z-50">
-                  <div className="flex items-center gap-3 border-b pb-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                      {user.photoURL ? (
+              <AnimatePresence>
+                {open && (
+                  <motion.ul
+                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 15, scale: 0.95 }}
+                    className="absolute right-0 mt-4 p-5 shadow-2xl bg-white dark:bg-slate-800 rounded-[2rem] w-72 border border-slate-100 dark:border-slate-700 z-[110]"
+                  >
+                    {/* User Info Header */}
+                    <div className="flex flex-col items-center text-center pb-4 mb-4 border-b border-slate-50 dark:border-slate-700">
+                      <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary mb-2">
                         <img
                           src={user.photoURL}
                           alt="user"
-                          className="object-cover w-full h-full"
+                          className="w-full h-full object-cover"
                         />
-                      ) : (
-                        <FaUserCircle className="text-2xl text-gray-400" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-primary">
+                      </div>
+                      <p className="font-black text-secondary dark:text-white truncate w-full px-2">
                         {user.displayName}
                       </p>
-                      <p className="text-sm text-gray-500 truncate">
+                      <p className="text-xs text-slate-400 truncate w-full px-2">
                         {user.email}
                       </p>
                     </div>
-                  </div>
-                  <NavLink
-                    to="/dashboard"
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `btn btn-outline px-3 py-2 rounded-lg text-primary hover:bg-primary hover:text-white hover:border-none transition ${
-                        isActive ? "bg-primary text-white font-semibold" : ""
-                      }`
-                    }
-                  >
-                    Dashboard
-                  </NavLink>
 
-                  <NavLink
-                    to="/profile"
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `btn btn-outline px-3 py-2 rounded-lg text-primary hover:bg-primary hover:text-white hover:border-none transition ${
-                        isActive ? "bg-primary text-white font-semibold" : ""
-                      }`
-                    }
-                  >
-                    <CgProfile size={20} />
-                    View Profile
-                  </NavLink>
+                    <div className="space-y-2">
+                      <NavLink
+                        to="/dashboard"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-2xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary transition-all"
+                      >
+                        <FiGrid className="text-xl" /> Dashboard
+                      </NavLink>
 
-                  <button
-                    onClick={handleLogout}
-                    className="w-full px-3 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition cursor-pointer"
-                  >
-                    <span className="flex justify-center items-center gap-1">
-                      <FiLogOut />
-                      Logout
-                    </span>
-                  </button>
-                </ul>
-              )}
+                      <NavLink
+                        to="/dashboard/profile"
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-2xl font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-primary transition-all"
+                      >
+                        <FiUser className="text-xl" /> View Profile
+                      </NavLink>
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 p-3 rounded-2xl font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all mt-2"
+                      >
+                        <FiLogOut className="text-xl" /> Logout Account
+                      </button>
+                    </div>
+                  </motion.ul>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
-            <motion.div
-              className="rounded-xl p-[2px] overflow-hidden w-30"
-              animate={{
-                backgroundPositionX: ["0%", "100%", "0%"],
-              }}
-              transition={{
-                duration: 4,
-                ease: "linear",
-                repeat: Infinity,
-              }}
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, #3B82F6, #06B6D4, #3B82F6)",
-                backgroundSize: "300% 100%",
-              }}
-            >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
                 to="/auth/login"
-                className="block text-center text-white py-2 rounded-lg font-semibold hover:text-gray-300 transition-colors duration-300"
+                className="px-8 py-3 bg-primary text-white font-black rounded-2xl shadow-lg shadow-primary/25 flex items-center gap-2 hover:bg-indigo-700 transition-all"
               >
-                <span className="flex justify-center items-center gap-1">
-                  <FiLogIn />
-                  Login
-                </span>
+                <FiLogIn /> Login
               </Link>
             </motion.div>
           )}

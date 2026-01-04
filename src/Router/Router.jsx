@@ -17,6 +17,7 @@ import Contact from "../Pages/Contact";
 import Profile from "../Pages/Profile";
 import ForgetPassword from "../Pages/ForgatPassword";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import DashboardHome from "../Pages/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -42,18 +43,6 @@ const router = createBrowserRouter([
           ),
       },
       {
-        path: "/update-course/:id",
-        element: (
-          <PrivetRoute>
-            <UpdateCourse></UpdateCourse>
-          </PrivetRoute>
-        ),
-        loader: ({ params }) =>
-          fetch(
-            `https://my-assignment-10-server-1.onrender.com/courses/${params.id}`
-          ),
-      },
-      {
         path: "/about",
         Component: AboutUs,
       },
@@ -71,6 +60,8 @@ const router = createBrowserRouter([
       </PrivetRoute>
     ),
     children: [
+      { index: true, Component: DashboardHome },
+      { path: 'home', Component: DashboardHome },
       {
         path: "my-enrolled-course",
         element: <MyEnrolledCourse></MyEnrolledCourse>,
@@ -82,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "my-added-course",
         element: <MyAddedCourse></MyAddedCourse>,
+      },
+      {
+        path: "update-course/:id",
+        element: <UpdateCourse></UpdateCourse>,
+        loader: ({ params }) =>
+          fetch(
+            `https://my-assignment-10-server-1.onrender.com/courses/${params.id}`
+          ),
       },
       {
         path: "profile",
