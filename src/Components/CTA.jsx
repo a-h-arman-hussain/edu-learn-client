@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router"; // বা react-router-dom
+import { Link } from "react-router";
 import { FiArrowRight, FiUsers } from "react-icons/fi";
 
 export default function CTA() {

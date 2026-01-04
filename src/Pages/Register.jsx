@@ -6,7 +6,7 @@ import {
   FiLock,
   FiImage,
   FiEye,
-  FiEyeOff, // FiEyeSlash এর বদলে FiEyeOff ব্যবহার করুন
+  FiEyeOff,
 } from "react-icons/fi";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";

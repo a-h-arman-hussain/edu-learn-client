@@ -31,7 +31,7 @@ const AddCourse = () => {
           icon: "success",
           title: "Course Added!",
           text: `${formData.title} has been successfully published.`,
-          confirmButtonColor: "#4338ca", // Your Primary Indigo
+          confirmButtonColor: "#4338ca",
           timer: 2500,
         });
         e.target.reset();

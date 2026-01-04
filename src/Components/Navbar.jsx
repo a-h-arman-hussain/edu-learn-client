@@ -95,7 +95,7 @@ const Navbar = () => {
               src={logo}
               alt="EduLearn Logo"
             />
-            <span className="text-2xl font-black text-secondary dark:text-white tracking-tighter">
+            <span className="hidden sm:block text-2xl font-black text-secondary dark:text-white tracking-tighter">
               Edu<span className="text-primary">Learn</span>
             </span>
           </Link>

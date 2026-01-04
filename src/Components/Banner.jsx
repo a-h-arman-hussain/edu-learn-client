@@ -55,7 +55,6 @@ const Banner = () => {
 
         {/* --- Right Content (Smaller Image) --- */}
         <div className="flex-1 relative w-full flex justify-center lg:justify-end order-1 lg:order-2">
-          {/* ইমেজ এবং ফ্রেমের সাইজ কমানো হয়েছে উচ্চতা বাঁচাতে */}
           <div className="relative w-full max-w-[220px] sm:max-w-[280px] lg:max-w-[340px]">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -69,7 +68,7 @@ const Banner = () => {
               />
             </motion.div>
 
-            {/* Floating Card - আরও ছোট করা হয়েছে */}
+            {/* Floating Card */}
             <motion.div
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}

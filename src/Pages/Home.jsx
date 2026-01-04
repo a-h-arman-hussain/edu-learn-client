@@ -60,7 +60,7 @@ const Home = () => {
 
         {/* Courses Grid */}
         {!loading && !error && latestCourse.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
             {latestCourse.slice(0, 8).map((course) => (
               <div key={course._id} className="group">
                 <CourseCard course={course} />

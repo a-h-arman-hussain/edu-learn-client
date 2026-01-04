@@ -55,7 +55,7 @@ export default function LearningPartnersMarquee() {
   return (
     <section className="mt-15 overflow-hidden">
       {" "}
-      {/* overflow-hidden নিশ্চিত করা হয়েছে */}
+      {/* overflow-hidden */}
       <div className="container mx-auto px-6 mb-12 text-center">
         <h2 className="text-secondary dark:text-slate-300 text-sm font-black uppercase tracking-[0.3em] mb-4 opacity-80">
           Trusted by Industry Leaders
